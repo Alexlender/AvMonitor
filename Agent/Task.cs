@@ -1,6 +1,6 @@
 namespace Agent
 {
-    public class WeatherForecast
+    public class Task
     {
         public DateTime Date { get; set; }
 
