@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-
+using Hangfire;
 namespace Agent.Controllers
 {
     [ApiController]
@@ -15,16 +15,18 @@ namespace Agent.Controllers
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        public Task Get()
-        {
-            return new Task() { Date = DateTime.Now };
+        public IActionResult Get()
+        { 
+            return Ok();
         }
 
-        [HttpPost(Name = "PostWeatherForecast")]
-        public bool Post(IEnumerable<Task> tasks)
+        [HttpPost(Name = "add-task")]
+        public IActionResult Post(Task task)
         {
-            return tasks.First().TemperatureC == 10;
+            RecurringJob.AddOrUpdate(task.Id, () => Console.WriteLine($"PING {task.Url}"), "* * * * *"); 
+            return Ok(task.Id);
         }
+
 
     }
 }
