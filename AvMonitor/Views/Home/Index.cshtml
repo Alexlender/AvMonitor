@@ -1,8 +1,40 @@
-﻿@{
+﻿@model TaskModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Well cum</h1>
+</div>
+
+<div>
+<form method = "post" asp-controller = "Task" asp-action = "Add">
+    <label asp-for="Id"></label>
+    <input asp-for="Id" />
+    <span asp-validation-for="Id"></span>
+
+    <label asp-for="Name"></label>
+    <input asp-for="Name" />
+    <span asp-validation-for="Name"></span>
+
+    <label asp-for="Url"></label>
+    <input asp-for="Url" />
+    <span asp-validation-for="Url"></span>
+
+    <label asp-for="CronExp"></label>
+    <input asp-for="CronExp" />
+    <span asp-validation-for="CronExp"></span>
+
+    <input type="submit" value="Ентер" />
+</form>
+</div>
+
+<div>
+<form method = "post" asp-controller = "Task" asp-action = "Delete">
+    <label asp-for="Id"></label>
+    <input asp-for="Id" />
+    <span asp-validation-for="Id"></span>
+
+    <input type="submit" value="Удалить" />
+</form>
 </div>
