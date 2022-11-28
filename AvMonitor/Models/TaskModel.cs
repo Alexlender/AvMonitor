@@ -11,9 +11,9 @@ namespace AvMonitor
         public string? Name { get; set; }  //может быть неуникальным
 
         [Display(Name = "Пользователь")]
-        public UserModel? User { get; set; } = new UserModel("NIKITA228"); //до реализации авторизации тут будет этот костыль, сорян, если из-за этого буду ошибки ^-^
+        public string? UserName { get; set; } = "NIKITA228"; //до реализации авторизации тут будет этот костыль, сорян, если из-за этого буду ошибки ^-^
 
-        public string Id { get { return $"{User?.Name}.{Name}"; } } //всегда ункикальное (у каждого пользователя имена всех задач уникальны)
+        public string Id { get { return $"{UserName}.{Name}"; } } //всегда ункикальное (у каждого пользователя имена всех задач уникальны)
 
         [Display(Name = "Url")]
         [Required]
