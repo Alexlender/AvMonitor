@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Hangfire;
 using AvMonitor;
+using Agent.Classes;
 
 namespace Agent.Controllers
 {
@@ -25,7 +26,7 @@ namespace Agent.Controllers
         [HttpPost(Name = "add-task")]
         public IActionResult Post(TaskModel task)
         {
-            RecurringJob.AddOrUpdate(task.Id, () => Console.WriteLine($"PING {task.Url}"), task.CronExp); 
+            RecurringJob.AddOrUpdate(task.Id, () => Console.WriteLine($"Ping {task.Url}"), task.CronExp); 
             return Ok(task.Id);
         }
 

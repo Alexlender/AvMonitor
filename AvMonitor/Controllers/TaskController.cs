@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AvMonitor.Classes;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net;
@@ -10,8 +11,6 @@ namespace AvMonitor.Controllers
     {
         private readonly ILogger<TaskController> _logger;
 
-        private readonly string _agentUri = "https://localhost:7284/Task";
-
         public TaskController(ILogger<TaskController> logger)
         {
             _logger = logger;
@@ -22,7 +21,7 @@ namespace AvMonitor.Controllers
         {
             if (ModelState.IsValid)
             {
-                string result = (await PostAsync(new Uri(_agentUri), task)).ToString();
+                string result = (await AgentManager.GetInstance().PostAsync("Task", task)).ToString();
                 _logger.LogInformation(result);
             }
             return Redirect("/");
@@ -31,23 +30,9 @@ namespace AvMonitor.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(TaskModel task)
         {
-            string result = (await DeleteAsync(new Uri($"{_agentUri}/{task.Id}"))).ToString();
+            string result = (await AgentManager.GetInstance().DeleteAsync($"Task/{task.Id}")).ToString();
             _logger.LogInformation(result);
             return Redirect("/");
-        }
-
-        private static async Task<HttpStatusCode> PostAsync(Uri requestUri, object content)
-        {
-            var httpClient = new HttpClient();
-            var response = await httpClient.PostAsJsonAsync(requestUri, content);
-            return response.StatusCode;
-        }
-
-        private static async Task<HttpStatusCode> DeleteAsync(Uri requestUri)
-        {
-            var httpClient = new HttpClient();
-            var response = await httpClient.DeleteAsync(requestUri);
-            return response.StatusCode;
         }
 
     }
