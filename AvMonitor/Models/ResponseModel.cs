@@ -4,14 +4,18 @@ namespace AvMonitor.Models
 {
     public class ResponseModel
     {
-        public ResponseModel(HttpStatusCode statusCode)
+        public string TaskId { get; }
+        public HttpStatusCode StatusCode { get; }
+        public DateTime DateTime { get; }
+
+        public ResponseModel(HttpStatusCode statusCode, string taskId = "default")
         {
+            TaskId= taskId;
             StatusCode = statusCode;
             DateTime = DateTime.Now;
         }
-        public HttpStatusCode StatusCode { get; }
 
-        public DateTime DateTime { get; }
+        
 
     }
 }
