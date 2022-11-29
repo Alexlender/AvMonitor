@@ -21,7 +21,7 @@ namespace AvMonitor.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(TaskModel task)
         {
-            Console.WriteLine(task.Id);
+            Console.WriteLine($"{task.Id}");
             Console.WriteLine(await DeleteAsync(new Uri($"https://localhost:7284/Task/{task.Id}")));
             return Redirect("/");
         }
