@@ -21,7 +21,7 @@ namespace AvMonitor.Controllers
         {
             if (ModelState.IsValid)
             {
-                string result = (await AgentManager.GetInstance().PostAsync("Task", task)).ToString();
+                string result = (await HttpManager.GetInstance().PostAsync("Task", task)).ToString();
                 _logger.LogInformation(result);
             }
             return Redirect("/");
@@ -31,7 +31,7 @@ namespace AvMonitor.Controllers
         public async Task<IActionResult> Delete(TaskModel task)
         {
             Console.WriteLine($"{task.Id}");
-            Console.WriteLine(await DeleteAsync(new Uri($"https://localhost:7284/Task/{task.Id}")));
+            Console.WriteLine(await HttpManager.GetInstance().DeleteAsync($"Task/{task.Id}"));
             return Redirect("/");
         }
 

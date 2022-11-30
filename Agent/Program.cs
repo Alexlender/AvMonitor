@@ -1,4 +1,5 @@
-﻿using Hangfire;
+﻿using AvMonitor.Classes;
+using Hangfire;
 using Hangfire.SqlServer;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,7 +22,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
+HttpManager.Init(@"https://localhost:7012");
 
 var app = builder.Build();
 

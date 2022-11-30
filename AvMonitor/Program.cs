@@ -8,7 +8,7 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-AgentManager.GetInstance(@"https://localhost:7284");
+HttpManager.Init(@"https://localhost:7284");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

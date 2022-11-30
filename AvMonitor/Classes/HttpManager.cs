@@ -2,40 +2,42 @@
 
 namespace AvMonitor.Classes
 {
-    public class AgentManager
+    public class HttpManager
     {
-        private static AgentManager? _instance;
+        private static HttpManager? _instance;
         private Uri AgentAbsoluteUri { get; set; }
-        private AgentManager(string url)
+        private HttpManager(string url)
         {
             AgentAbsoluteUri = new(url);
         }
 
-        public static AgentManager GetInstance(string url)
+        public static HttpManager Init(string url)
         {
             if (_instance == null)
-                _instance = new AgentManager(url);
+                _instance = new HttpManager(url);
             return _instance;
         }
 
-        public static AgentManager GetInstance()
+        public static HttpManager GetInstance()
         {
-            return _instance;
+            if(_instance != null)
+                return _instance;
+            throw new NullReferenceException("Object is not initialized");
         }
 
-        public async Task<HttpStatusCode> PostAsync(string requestPath, object content)
+        public async Task<HttpResponseMessage> PostAsync(string requestPath, object content)
         {
             var httpClient = new HttpClient();
             Console.WriteLine(AgentAbsoluteUri + requestPath);
             var response = await httpClient.PostAsJsonAsync(AgentAbsoluteUri + requestPath, content);
-            return response.StatusCode;
+            return response;
         }
 
-        public async Task<HttpStatusCode> DeleteAsync(string requestPath)
+        public async Task<HttpResponseMessage> DeleteAsync(string requestPath)
         {
             var httpClient = new HttpClient();
             var response = await httpClient.DeleteAsync(AgentAbsoluteUri + requestPath);
-            return response.StatusCode;
+            return response;
         }
 
     }
