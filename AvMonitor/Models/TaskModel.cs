@@ -1,25 +1,30 @@
 
+using AvMonitor.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace AvMonitor
 {
     public class TaskModel
     {
-        [Display(Name = "Айди")]
-        [Required]
-        public string Id { get; set; }
-
         [Display(Name = "Название задачи")]
         [Required]
-        public string Name { get; set; }
+        public string? Name { get; set; }  //может быть неуникальным
+
+        [Display(Name = "Пользователь")]
+        public string? UserName { get; set; } = "NIKITA228"; //до реализации авторизации тут будет этот костыль, сорян, если из-за этого буду ошибки ^-^
+
+        public string Id { get { return $"{UserName}.{Name}"; } } //всегда ункикальное (у каждого пользователя имена всех задач уникальны)
 
         [Display(Name = "Url")]
         [Required]
-        public string Url { get; set; }
+        public string? Url { get; set; }
 
-        [Display(Name = "Выражене crontab")]
+        [Display(Name = "Периодичность выполнения (выражение crontab)")]
         [Required]
-        public string CronExp { get; set; }
+        public string? CronExp { get; set; }
+
+        [Display(Name = "Канал связи для уведомления")]
+        public string? Channel { get; set; } = "";
 
     }
 }
