@@ -2,7 +2,7 @@
 using AvMonitor.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace AvMonitor
+namespace AvMonitor.Models
 {
     public class TaskModel
     {
@@ -17,7 +17,7 @@ namespace AvMonitor
 
         [Display(Name = "Url")]
         [Required]
-        public string? Url { get; set; }
+        public string? Path { get; set; }
 
         [Display(Name = "Периодичность выполнения (выражение crontab)")]
         [Required]

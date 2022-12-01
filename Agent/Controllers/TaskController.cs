@@ -20,24 +20,29 @@ namespace Agent.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IActionResult Get()
+        [HttpPost]
+        [Route("check")]
+        public ResponseModel CheckTask(TaskModel task)
         { 
-            return Ok();
+            return Pinger.Ping(task.Path);
         }
 
-        [HttpPost(Name = "add-task")]
-        public async Task<IActionResult> PostAsync(TaskModel task)
+
+        [HttpPost]
+        [Route("add")]
+        public IActionResult AddTask(TaskModel task)
         {
-            ResponseModel response = new(HttpStatusCode.OK, task.Id);
-            _ = await HttpManager.GetInstance().PostAsync($"add-response/{response.TaskId}", response);
-            RecurringJob.AddOrUpdate(task.Id, () => HttpManager.GetInstance().PostAsync($"add-response/{response.TaskId}", response), task.CronExp); 
+            
+            ResponseModel response = Pinger.Ping(task);
+            //await HttpManager.GetInstance().PostAsync($"add-response/{response.TaskId}", response);
+            RecurringJob.AddOrUpdate(task.Id, () =>  HttpManager.GetInstance().PostAsync($"add-response/{response.TaskId}", response), task.CronExp); 
             return Ok(task.Id);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public IActionResult Delete(string id)
         {
+
             RecurringJob.RemoveIfExists(id);
             return Ok();
         }

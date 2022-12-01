@@ -8,7 +8,7 @@ namespace AvMonitor.Models
         public HttpStatusCode StatusCode { get; }
         public DateTime DateTime { get; }
 
-        public ResponseModel(HttpStatusCode statusCode, string taskId = "default")
+        public ResponseModel(HttpStatusCode statusCode, string taskId)
         {
             TaskId= taskId;
             StatusCode = statusCode;
