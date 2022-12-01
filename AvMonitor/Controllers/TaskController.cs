@@ -32,7 +32,7 @@ namespace AvMonitor.Controllers
         public async Task<IActionResult> Delete(TaskModel task)
         {
             Console.WriteLine($"{task.Id}");
-            Console.WriteLine(await HttpManager.GetInstance().DeleteAsync($"Task/{task.Id}"));
+            Console.WriteLine(await HttpManager.GetInstance().DeleteAsync($"Task/delete/{task.Id}"));
             return Redirect("/");
         }
 
