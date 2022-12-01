@@ -7,13 +7,21 @@ namespace Agent.Classes
     {
         static public ResponseModel Ping(Uri uri, string taskId = "default")
         {
-            if (!uri.IsAbsoluteUri)
-                throw new ArgumentException("uri must be absolute");
-            HttpWebRequest myHttpWebRequest = WebRequest.CreateHttp(uri); //короче просто сделай так, чтобы возвращался реальный код ответа. Если не найден - 404 и всё такое.
-            //Отправляет HttpWebRequest и ждёт ответ в виде response
-            HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
-            ResponseModel RM = new ResponseModel(myHttpWebResponse.StatusCode, taskId);
-            return RM;
+            try
+            {
+                if (!uri.IsAbsoluteUri)
+                    throw new ArgumentException("uri must be absolute");
+                HttpWebRequest myHttpWebRequest = WebRequest.CreateHttp(uri); //короче просто сделай так, чтобы возвращался реальный код ответа. Если не найден - 404 и всё такое.
+                                                                              //Отправляет HttpWebRequest и ждёт ответ в виде response
+                HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
+                ResponseModel RM = new ResponseModel(myHttpWebResponse.StatusCode, taskId);
+                return RM;
+            }
+            catch (System.Net.WebException)
+            {
+                ResponseModel RME = new ResponseModel(HttpStatusCode.NotFound, taskId);
+                return RME;
+            }
         }
 
         static public ResponseModel Ping(TaskModel task)
