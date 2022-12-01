@@ -28,7 +28,6 @@ namespace AvMonitor.Classes
         public async Task<HttpResponseMessage> PostAsync(string requestPath, object content)
         {
             var httpClient = new HttpClient();
-            Console.WriteLine(AgentAbsoluteUri + requestPath);
             var response = await httpClient.PostAsJsonAsync(AgentAbsoluteUri + requestPath, content);
             return response;
         }

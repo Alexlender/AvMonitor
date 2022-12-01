@@ -26,5 +26,7 @@ namespace AvMonitor.Models
         [Display(Name = "Канал связи для уведомления")]
         public string? Channel { get; set; } = "";
 
+
+
     }
 }

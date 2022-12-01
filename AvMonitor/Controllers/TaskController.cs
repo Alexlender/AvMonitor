@@ -22,7 +22,7 @@ namespace AvMonitor.Controllers
         {
             if (ModelState.IsValid)
             {
-                string result = (await HttpManager.GetInstance().PostAsync("Task", task)).ToString();
+                string result = (await HttpManager.GetInstance().PostAsync("Task/add", task)).ToString();
                 _logger.LogInformation(result);
             }
             return Redirect("/");

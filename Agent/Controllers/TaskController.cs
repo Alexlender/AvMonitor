@@ -5,6 +5,7 @@ using Agent.Classes;
 using AvMonitor.Classes;
 using AvMonitor.Models;
 using System.Net;
+using Hangfire.Common;
 
 namespace Agent.Controllers
 {
@@ -32,10 +33,12 @@ namespace Agent.Controllers
         [Route("add")]
         public IActionResult AddTask(TaskModel task)
         {
-            
-            ResponseModel response = Pinger.Ping(task);
+
+            //ResponseModel response = Pinger.Ping(task);
             //await HttpManager.GetInstance().PostAsync($"add-response/{response.TaskId}", response);
-            RecurringJob.AddOrUpdate(task.Id, () =>  HttpManager.GetInstance().PostAsync($"add-response/{response.TaskId}", response), task.CronExp); 
+            System.Linq.Expressions.Expression<Action<TaskModel>> action = (task) => Console.WriteLine(task);
+            RecurringJob.AddOrUpdate(task.Id, () => Act(task), task.CronExp);
+            //RecurringJob.AddOrUpdate(task.Id, () => Console.WriteLine(DateTime.Now), task.CronExp); 
             return Ok(task.Id);
         }
 
@@ -45,6 +48,13 @@ namespace Agent.Controllers
 
             RecurringJob.RemoveIfExists(id);
             return Ok();
+        }
+
+        static public void Act(TaskModel task)
+        {
+            ResponseModel response = Pinger.Ping(task);
+            //Console.WriteLine(response.ToString());
+            HttpManager.GetInstance().PostAsync($"add-response/{response.TaskId}", response).Wait();
         }
 
     }
