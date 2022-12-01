@@ -1,10 +1,6 @@
 ﻿using AvMonitor.Classes;
 using AvMonitor.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Net;
-using System.Text;
 
 namespace AvMonitor.Controllers
 {
@@ -28,7 +24,7 @@ namespace AvMonitor.Controllers
             return Redirect("/");
         }
 
-        [HttpDelete]
+        [HttpPost]
         public async Task<IActionResult> Delete(TaskModel task)
         {
             Console.WriteLine($"{task.Id}");
