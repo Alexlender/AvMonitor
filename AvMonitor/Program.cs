@@ -7,21 +7,19 @@ using AvMonitor.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("AvMonitorContextConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AvMonitorContextConnection")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
-connectionString = builder.Configuration.GetConnectionString("TaskDataConnection");
 builder.Services.AddDbContext<TaskDataContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TaskDataConnection")));
 
 
-builder.Services.AddTransient<DataBase>();
+//builder.Services.AddTransient<DataBase>();
 
 builder.WebHost.UseUrls("https://localhost:7012");
 
@@ -51,8 +49,8 @@ app.UseAuthentication();
 
 
 
-app.MapGet("database/tasks", async (TaskDataContext db) => await db.Tasks.ToListAsync());
-app.MapGet("database/responses", async (TaskDataContext db) => await db.Tasks.ToListAsync());
+//app.MapGet("database/tasks", async (TaskDataContext db) => await db.Tasks.ToListAsync());
+//app.MapGet("database/responses", async (TaskDataContext db) => await db.Tasks.ToListAsync());
 
 app.MapControllerRoute(
     name: "default",
