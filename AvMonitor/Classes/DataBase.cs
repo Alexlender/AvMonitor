@@ -1,23 +1,19 @@
-﻿using AvMonitor.Models;
+﻿using AvMonitor.Data;
+using AvMonitor.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AvMonitor.Classes
 {
     public class DataBase : IDataBase
     {
 
-        private static DataBase? _instance;
+        private readonly TaskDataContext _taskDataContext;
 
-        private DataBase()
+        public DataBase(TaskDataContext TaskDataContext)
         {
-            //конструктор
+            _taskDataContext = TaskDataContext;
         }
 
-        public static DataBase GetInstance()
-        {
-            if (_instance == null)
-                _instance = new DataBase();
-            return _instance;
-        }
 
         public void AddResponse(ResponseModel response)
         {
@@ -26,7 +22,14 @@ namespace AvMonitor.Classes
 
         public void AddTask(TaskModel task)
         {
-            throw new NotImplementedException();
+
+
+            /*if (task.Id == default)
+                _taskDataContext.Entry(task).State = EntityState.Added;
+            else
+                _taskDataContext.Entry(task).State = EntityState.Modified;
+            _taskDataContext.SaveChanges();*/
+
         }
 
         public void DeleteTask(TaskModel task)

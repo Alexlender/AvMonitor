@@ -2,6 +2,7 @@ using AvMonitor.Classes;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using AvMonitor.Data;
+using AvMonitor.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,13 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+connectionString = builder.Configuration.GetConnectionString("TaskDataConnection");
+builder.Services.AddDbContext<TaskDataContext>(options =>
+    options.UseSqlServer(connectionString));
+
+
+builder.Services.AddTransient<DataBase>();
 
 builder.WebHost.UseUrls("https://localhost:7012");
 
@@ -35,11 +43,14 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseDefaultFiles();
 
 app.UseRouting();
 
 app.UseAuthorization();
 app.UseAuthentication();
+
+app.MapGet("/api/users", async (TaskDataContext db) => await db.Tasks.ToListAsync());
 
 app.MapControllerRoute(
     name: "default",

@@ -19,6 +19,8 @@ namespace AvMonitor.Controllers
         {
             if (ModelState.IsValid)
             {
+               
+
                 Console.WriteLine(User.Identity?.Name);
                 string result = (await HttpManager.GetInstance().PostAsync("Task/add", task)).ToString();
                 _logger.LogInformation(result);

@@ -13,6 +13,9 @@ namespace AvMonitor.Models
         [Display(Name = "Пользователь")]
         public string? UserName { get; set; }
 
+        [Key]
+        public int SID { get; set; }
+
         public string Id { get { return $"{UserName}.{Name}"; } } //всегда ункикальное (у каждого пользователя имена всех задач уникальны)
 
         [Display(Name = "Url")]
