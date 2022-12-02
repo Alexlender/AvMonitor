@@ -1,4 +1,5 @@
 ﻿using AvMonitor.Classes;
+using AvMonitor.Data;
 using AvMonitor.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,23 +8,25 @@ namespace AvMonitor.Controllers
 {
     public class TaskController : Controller
     {
-        private readonly ILogger<TaskController> _logger;
+       
+        private readonly TaskDataContext _context;
 
-        public TaskController(ILogger<TaskController> logger)
+        public TaskController(TaskDataContext context)
         {
-            _logger = logger;
+            _context = context;
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Add(TaskModel task)
         {
             if (ModelState.IsValid)
             {
-               
+                var db = new DataBase(_context);
+                Console.WriteLine(db.GetTaskByID("Vas.yandex").CronExp);
 
                 Console.WriteLine(User.Identity?.Name);
                 string result = (await HttpManager.GetInstance().PostAsync("Task/add", task)).ToString();
-                _logger.LogInformation(result);
             }
             return Redirect("/");
         }

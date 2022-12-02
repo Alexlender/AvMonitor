@@ -44,22 +44,22 @@ namespace AvMonitor.Classes
 
         public List<ResponseModel> GetAllResponsesByTask(TaskModel task)
         {
-            throw new NotImplementedException();
+            return _taskDataContext.Rasponses.Where(response => response.TaskId == task.Id).ToList();
         }
 
         public List<TaskModel> GetAllTasksFromUser(UserModel user)
         {
-            throw new NotImplementedException();
+            return _taskDataContext.Tasks.Where(task => task.UserName == user.Name).ToList();
         }
 
         public List<ResponseModel> GetResponsesByTask(TaskModel task, int n)
         {
-            throw new NotImplementedException();
+            return _taskDataContext.Rasponses.Where(response => response.TaskId == task.Id).Take(n).ToList();
         }
 
         public TaskModel GetTaskByID(string Id)
         {
-            throw new NotImplementedException();
+            return _taskDataContext.Tasks.AsEnumerable().Where(task => task.Id == Id).FirstOrDefault(new TaskModel());
         }
     }
 }

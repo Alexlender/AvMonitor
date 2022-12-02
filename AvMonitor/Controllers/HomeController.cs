@@ -1,4 +1,5 @@
-﻿using AvMonitor.Models;
+﻿using AvMonitor.Data;
+using AvMonitor.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,11 +7,11 @@ namespace AvMonitor.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly TaskDataContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(TaskDataContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -20,6 +21,12 @@ namespace AvMonitor.Controllers
 
         public IActionResult Privacy()
         {
+            return View();
+        }
+
+        public IActionResult Tasks()
+        {
+            ViewData["dbContext"] = _context;
             return View();
         }
 

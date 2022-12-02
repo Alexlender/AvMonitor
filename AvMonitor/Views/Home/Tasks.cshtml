@@ -1,0 +1,44 @@
+﻿@using AvMonitor.Classes
+@using AvMonitor.Data
+@using Microsoft.EntityFrameworkCore
+@{
+
+    var db = new DataBase(ViewData["dbContext"] as TaskDataContext);
+
+ }
+<!DOCTYPE html>
+<html>
+ <head>
+   <title>Все задачи пользователя @User.Identity?.Name</title>
+   <style>
+       table, th, td {
+         border: solid 1px #bbbbbb;
+         border-collapse: collapse;
+         padding: 2px;
+       }
+    </style>
+ </head>
+ <body>
+   <h1>Все задачи пользователя @User.Identity?.Name</h1>
+   <table>
+       <thead>
+           <tr>
+               <th>Id</th>
+               <th>Name</th>
+               <th>Description</th>
+                <th>CronExp</th>
+           </tr>
+       </thead>
+       <tbody>
+            @foreach(var task in db.GetAllTasksFromUser(new UserModel(@User.Identity?.Name))){
+                <tr>
+               <td>@task.Id</td>
+                   <td>@task.Name</td>
+                   <td>@task.Description</td>
+                   <td>@task.CronExp</td>
+            </tr>
+           }
+       </tbody>
+   </table>
+ </body>
+</html>
