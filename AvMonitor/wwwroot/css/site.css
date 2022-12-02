@@ -1,18 +1,33 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    font-family: var(--sans-serif);
+}
+
+h1 {
+    font-size: 20px;
+    font-family: 'Roboto Mono', 'Segoe UI';
+}
+
+h2 {
+    font-size: 16px;
+    font-family: 'Roboto Mono', 'Segoe UI';
+}
+
+.navbar {
+    background: #000f;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
