@@ -1,5 +1,6 @@
 ﻿using AvMonitor.Classes;
 using AvMonitor.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AvMonitor.Controllers
@@ -18,6 +19,7 @@ namespace AvMonitor.Controllers
         {
             if (ModelState.IsValid)
             {
+                Console.WriteLine(User.Identity?.Name);
                 string result = (await HttpManager.GetInstance().PostAsync("Task/add", task)).ToString();
                 _logger.LogInformation(result);
             }
