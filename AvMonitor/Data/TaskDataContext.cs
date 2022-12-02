@@ -10,7 +10,7 @@ namespace AvMonitor.Data
             : base(options)
         {
             Console.WriteLine("DATABASE WAS INIT!!!");
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -23,7 +23,7 @@ namespace AvMonitor.Data
             );*/
         }
         public DbSet<TaskModel> Tasks { get; set; }
-        //public DbSet<ResponseModel> Rasponses { get; set; }
+        public DbSet<ResponseModel> Rasponses { get; set; }
 
 
     }

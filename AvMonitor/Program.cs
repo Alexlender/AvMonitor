@@ -50,7 +50,8 @@ app.UseRouting();
 app.UseAuthorization();
 app.UseAuthentication();
 
-app.MapGet("/api/users", async (TaskDataContext db) => await db.Tasks.ToListAsync());
+app.MapGet("database/tasks", async (TaskDataContext db) => await db.Tasks.ToListAsync());
+app.MapGet("database/responses", async (TaskDataContext db) => await db.Tasks.ToListAsync());
 
 app.MapControllerRoute(
     name: "default",

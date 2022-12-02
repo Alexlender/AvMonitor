@@ -1,20 +1,17 @@
 
 using AvMonitor.Models;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace AvMonitor.Models
 {
+    [Keyless]
     public class TaskModel
     {
-        [Display(Name = "Название задачи")]
+        [Display(Name = "Имя ресурса")]
         [Required]
-        public string? Name { get; set; }  //может быть неуникальным
-
-        [Display(Name = "Пользователь")]
-        public string? UserName { get; set; }
-
-        [Key]
-        public int SID { get; set; }
+        public string? Name { get; set; } 
+        public string? UserName { get; set; } 
 
         public string Id { get { return $"{UserName}.{Name}"; } } //всегда ункикальное (у каждого пользователя имена всех задач уникальны)
 
@@ -26,10 +23,8 @@ namespace AvMonitor.Models
         [Required]
         public string? CronExp { get; set; }
 
-        [Display(Name = "Канал связи для уведомления")]
-        public string? Channel { get; set; } = "";
-
-
+        [Display(Name = "Описание")]
+        public string Description { get; set; } = "";
 
     }
 }
