@@ -6,7 +6,7 @@ namespace AvMonitor.Models
 {
     public class TaskModel
     {
-        [Display(Name = "Название задачи")]
+        [Display(Name = "ID задачи")]
         [Required]
         public string? Name { get; set; }  //может быть неуникальным
 
@@ -19,7 +19,7 @@ namespace AvMonitor.Models
         [Required]
         public string? Path { get; set; }
 
-        [Display(Name = "Периодичность выполнения (выражение crontab)")]
+        [Display(Name = "График выполнения (формат crontab)")]
         [Required]
         public string? CronExp { get; set; }
 
