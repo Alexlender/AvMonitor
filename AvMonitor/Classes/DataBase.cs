@@ -30,12 +30,16 @@ namespace AvMonitor.Classes
 
         public void DeleteTask(TaskModel task)
         {
-            throw new NotImplementedException();
+            if (task != null)
+            {
+                _taskDataContext.Tasks.Remove(task);
+                _taskDataContext.SaveChanges();
+            }
         }
 
         public void DeleteTaskByID(string Id)
         {
-            var itemToRemove = GetTaskByID(Id);
+            TaskModel itemToRemove = GetTaskByID(Id);
 
             if (itemToRemove != null)
             {
