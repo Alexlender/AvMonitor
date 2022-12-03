@@ -16,6 +16,7 @@ namespace AvMonitor.Controllers
 
         public IActionResult Index()
         {
+            ViewData["dbContext"] = _context;
             return View();
         }
 

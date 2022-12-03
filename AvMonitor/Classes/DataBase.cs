@@ -23,12 +23,8 @@ namespace AvMonitor.Classes
         public void AddTask(TaskModel task)
         {
 
-
-            /*if (task.Id == default)
-                _taskDataContext.Entry(task).State = EntityState.Added;
-            else
-                _taskDataContext.Entry(task).State = EntityState.Modified;
-            _taskDataContext.SaveChanges();*/
+            _taskDataContext.Tasks.Add(task);
+            _taskDataContext.SaveChanges();
 
         }
 
@@ -39,27 +35,33 @@ namespace AvMonitor.Classes
 
         public void DeleteTaskByID(string Id)
         {
-            throw new NotImplementedException();
+            var itemToRemove = GetTaskByID(Id);
+
+            if (itemToRemove != null)
+            {
+                _taskDataContext.Tasks.Remove(itemToRemove);
+                _taskDataContext.SaveChanges();
+            }
         }
 
         public List<ResponseModel> GetAllResponsesByTask(TaskModel task)
         {
-            return _taskDataContext.Rasponses.Where(response => response.TaskId == task.Id).ToList();
+            return _taskDataContext.Rasponses.AsEnumerable().Where(response => response.TaskId == task.Id).ToList();
         }
 
         public List<TaskModel> GetAllTasksFromUser(UserModel user)
         {
-            return _taskDataContext.Tasks.Where(task => task.UserName == user.Name).ToList();
+            return _taskDataContext.Tasks.AsEnumerable().Where(task => task.UserName == user.Name).ToList();
         }
 
         public List<ResponseModel> GetResponsesByTask(TaskModel task, int n)
         {
-            return _taskDataContext.Rasponses.Where(response => response.TaskId == task.Id).Take(n).ToList();
+            return _taskDataContext.Rasponses.AsEnumerable().Where(response => response.TaskId == task.Id).Take(n).ToList();
         }
 
-        public TaskModel GetTaskByID(string Id)
+        public TaskModel? GetTaskByID(string Id)
         {
-            return _taskDataContext.Tasks.AsEnumerable().Where(task => task.Id == Id).FirstOrDefault(new TaskModel());
+            return _taskDataContext.Tasks.AsEnumerable().Where(task => task.Id == Id).FirstOrDefault(null as TaskModel);
         }
     }
 }

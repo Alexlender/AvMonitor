@@ -10,31 +10,39 @@ namespace AvMonitor.Controllers
     {
        
         private readonly TaskDataContext _context;
-
+        DataBase db;
         public TaskController(TaskDataContext context)
         {
             _context = context;
+            db = new DataBase(_context);
         }
 
 
         [HttpPost]
         public async Task<IActionResult> Add(TaskModel task)
         {
+            task.UserName = User.Identity?.Name;
             if (ModelState.IsValid)
             {
-                var db = new DataBase(_context);
-                Console.WriteLine(db.GetTaskByID("Vas.yandex").CronExp);
-
-                Console.WriteLine(User.Identity?.Name);
-                string result = (await HttpManager.GetInstance().PostAsync("Task/add", task)).ToString();
+                if (db.GetTaskByID(task.Id) == null)
+                {
+                    db.AddTask(task);
+                    string result = (await HttpManager.GetInstance().PostAsync("Task/add", task)).ToString();
+                    Console.WriteLine(result);
+                    return Redirect("/");
+                }
+                
             }
+            Console.WriteLine("ERROR");
             return Redirect("/");
+
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(TaskModel task)
         {
-            Console.WriteLine($"{task.Id}");
+            task.UserName = User.Identity?.Name;
+            db.DeleteTaskByID(task.Id);
             Console.WriteLine(await HttpManager.GetInstance().DeleteAsync($"Task/delete/{task.Id}"));
             return Redirect("/");
         }
