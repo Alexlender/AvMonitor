@@ -15,7 +15,7 @@ namespace AvMonitor.Data
         {
         }
         public DbSet<TaskModel> Tasks { get; set; }
-        public DbSet<ResponseModel> Rasponses { get; set; }
+        public DbSet<ResponseModel> Responses { get; set; }
 
 
     }

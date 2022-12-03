@@ -4,23 +4,19 @@ using System.Net;
 
 namespace AvMonitor.Models
 {
-    [Keyless]
+
     public class ResponseModel
     {
-        
-        public string TaskId { get; }
+        [Key]
+        public int Index { get; set; }
 
-        public bool IsSuccess { get; }
-        public HttpStatusCode StatusCode { get; }
-        public string DateTime { get; }
+        public string TaskId { get; set; }
 
-        public ResponseModel()
-        {
-            TaskId = "";
-            StatusCode = 0;
-            DateTime = System.DateTime.Now.ToString();
-            IsSuccess = false;
-        }
+        public bool IsSuccess { get; set; }
+        public HttpStatusCode StatusCode { get; set; }
+        public string DateTime { get; set; }
+
+        public ResponseModel() { }
         public ResponseModel(HttpStatusCode statusCode, string taskId)
         {
             TaskId = taskId;

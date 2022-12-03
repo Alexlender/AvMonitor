@@ -1,14 +1,26 @@
-﻿using AvMonitor.Models;
+﻿using AvMonitor.Classes;
+using AvMonitor.Data;
+using AvMonitor.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AvMonitor.Controllers
 {
     public class ResponseController : Controller
     {
-        [HttpPost("add-response/{id}")]
+
+        private readonly TaskDataContext _context;
+        DataBase db;
+        public ResponseController(TaskDataContext context)
+        {
+            _context = context;
+            db = new DataBase(_context);
+        }
+
+        [HttpPost("add-response")]
         public IActionResult Post([FromBody] ResponseModel response)
         {
-            Console.WriteLine($"Task {response.TaskId} was checked at {response.DateTime} with result {response.StatusCode}");
+            
+            db.AddResponse(response);
             return Ok();
         }
     }
