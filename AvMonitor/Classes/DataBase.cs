@@ -17,11 +17,13 @@ namespace AvMonitor.Classes
 
         public void AddResponse(ResponseModel response)
         {
-            throw new NotImplementedException();
+            _taskDataContext.Responses.Add(response);
+            _taskDataContext.SaveChanges();
         }
 
         public void AddTask(TaskModel task)
         {
+
 
             _taskDataContext.Tasks.Add(task);
             _taskDataContext.SaveChanges();
@@ -50,7 +52,7 @@ namespace AvMonitor.Classes
 
         public List<ResponseModel> GetAllResponsesByTask(TaskModel task)
         {
-            return _taskDataContext.Rasponses.AsEnumerable().Where(response => response.TaskId == task.Id).ToList();
+            return _taskDataContext.Responses.AsEnumerable().Where(response => response.TaskId == task.Id).ToList();
         }
 
         public List<TaskModel> GetAllTasksFromUser(UserModel user)
@@ -60,7 +62,7 @@ namespace AvMonitor.Classes
 
         public List<ResponseModel> GetResponsesByTask(TaskModel task, int n)
         {
-            return _taskDataContext.Rasponses.AsEnumerable().Where(response => response.TaskId == task.Id).Take(n).ToList();
+            return _taskDataContext.Responses.AsEnumerable().Where(response => response.TaskId == task.Id).Take(n).ToList();
         }
 
         public TaskModel? GetTaskByID(string Id)

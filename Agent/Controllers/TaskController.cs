@@ -54,7 +54,7 @@ namespace Agent.Controllers
         {
             ResponseModel response = Pinger.Ping(task);
             //Console.WriteLine(response.ToString());
-            HttpManager.GetInstance().PostAsync($"add-response/{response.TaskId}", response).Wait();
+            HttpManager.GetInstance().PostAsync($"add-response", response).Wait();
         }
 
     }
