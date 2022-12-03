@@ -5,7 +5,46 @@
 
     var db = new DataBase(ViewData["dbContext"] as TaskDataContext);
 
- }
+}
+
+@model TaskModel
+@{
+    ViewData["Title"] = "Tasks";
+}
+
+<div>
+    <form method="post" asp-controller="Task" asp-action="Add">
+
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+
+        <label asp-for="Path"></label>
+        <input asp-for="Path" />
+        <span asp-validation-for="Path"></span>
+
+        <label asp-for="CronExp"></label>
+        <input asp-for="CronExp" />
+        <span asp-validation-for="CronExp"></span>
+
+        <label asp-for="Description"></label>
+        <input asp-for="Description" />
+        <span asp-validation-for="Description"></span>
+
+        <input type="submit" value="Добавить" />
+    </form>
+</div>
+
+<div>
+    <form method="post" asp-controller="Task" asp-action="Delete">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+
+        <input type="submit" value="Удалить" />
+    </form>
+</div>
+
 <!DOCTYPE html>
 <html>
  <head>
