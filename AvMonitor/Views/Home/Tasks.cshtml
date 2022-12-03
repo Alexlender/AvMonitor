@@ -12,30 +12,42 @@
     ViewData["Title"] = "Tasks";
 }
 
+
 <div>
-    <form method="post" asp-controller="Task" asp-action="Add">
+    <div class="row">
+        <div class="col">
+            <h2 class="text-lg-center">Добавить задачу</h2>
+            <form method="post" asp-controller="Task" asp-action="Add" class="align-self-end">
 
-        <label asp-for="Name"></label>
-        <input asp-for="Name" />
-        <span asp-validation-for="Name"></span>
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="align-self-end" />
+                    <span asp-validation-for="Name"></span>
 
-        <label asp-for="Path"></label>
-        <input asp-for="Path" />
-        <span asp-validation-for="Path"></span>
+                     <br>
 
-        <label asp-for="CronExp"></label>
-        <input asp-for="CronExp" />
-        <span asp-validation-for="CronExp"></span>
+                     <label asp-for="Path"></label>
+                     <input asp-for="Path" />
+                     <span asp-validation-for="Path"></span>
 
-        <label asp-for="Description"></label>
-        <input asp-for="Description" />
-        <span asp-validation-for="Description"></span>
+                     <br>
 
-        <input type="submit" value="Добавить" />
+                    <label asp-for="CronExp"></label>
+                    <input asp-for="CronExp" />
+                    <span asp-validation-for="CronExp"></span>
+
+                    <br>
+
+                    <label asp-for="Description"></label>
+                    <input asp-for="Description" />
+                    <span asp-validation-for="Description"></span>
+
+                    <br>
+
+                    <input type="submit" value="Добавить" />
     </form>
-</div>
-
-<div>
+    </div>
+    <div class="col">
+    <h2 class="container">Удалить задачу</h2>
     <form method="post" asp-controller="Task" asp-action="Delete">
         <label asp-for="Name"></label>
         <input asp-for="Name" />
@@ -43,6 +55,8 @@
 
         <input type="submit" value="Удалить" />
     </form>
+        </div>
+    </div>
 </div>
 
 <!DOCTYPE html>
