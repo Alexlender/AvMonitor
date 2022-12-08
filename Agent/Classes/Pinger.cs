@@ -13,7 +13,7 @@ namespace Agent.Classes
                 if (!uri.IsAbsoluteUri)
                     throw new ArgumentException("uri must be absolute");
                 using HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri); //короче просто сделай так, чтобы возвращался реальный код ответа. Если не найден - 404 и всё такое.
-                using HttpResponseMessage response = httpClient.SendAsync(request).Wait();                                                                                                //Отправляет HttpWebRequest и ждёт ответ в виде response
+                using HttpResponseMessage response = httpClient.SendAsync(request).Result;                                                                                               //Отправляет HttpWebRequest и ждёт ответ в виде response
 
                 ResponseModel RM = new ResponseModel(response.StatusCode, taskId);
                 return RM;
