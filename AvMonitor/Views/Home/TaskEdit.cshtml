@@ -11,6 +11,15 @@
     //TODO: Привести в порядок формы
 }
 
+<script language="C#">
+ 
+      void LinkButton_Click(Object sender, EventArgs e) 
+      {
+        
+      }
+ 
+   </script>
+
 <div class="container-md">
     <h1>Все задачи пользователя @User.Identity?.Name</h1>
     @if (!db.GetAllTasksFromUser(new UserModel(@User.Identity?.Name)).Any())
@@ -31,20 +40,26 @@
                 <th>URL</th>
                 <th>CronExp</th>
                 <th>Description</th>
+                <th>Select</th>
             </tr>
         </thead>
         <tbody id="tasks">
             @foreach (var task in db.GetAllTasksFromUser(new UserModel(@User.Identity?.Name)))
             {
                 <tr id="trow" class="table-active">
+
                     <td>@task.Name</td>
                     <td>@task.Path</td>
                     <td>@task.CronExp</td>
                     <td>@task.Description</td>
+                    <td><input type="checkbox" class="js-jobs-list-select-all"/></td>
+
                 </tr>
+                
             }
         </tbody>
     </table>
+    <h1>Говна поел жестко</h1>
     }
 </div>
 

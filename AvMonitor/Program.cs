@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using AvMonitor.Data;
 using AvMonitor.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<TaskDataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("TaskDataConnection")));
 
+builder.Services.AddRazorPages();
 
 //builder.Services.AddTransient<DataBase>();
 
@@ -46,7 +48,6 @@ app.UseRouting();
 
 app.UseAuthorization();
 app.UseAuthentication();
-
 
 
 //app.MapGet("database/tasks", async (TaskDataContext db) => await db.Tasks.ToListAsync());
