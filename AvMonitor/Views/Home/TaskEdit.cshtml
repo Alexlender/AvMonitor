@@ -15,7 +15,7 @@
     <h1>Все задачи пользователя @User.Identity?.Name</h1>
     @if (!db.GetAllTasksFromUser(new UserModel(@User.Identity?.Name)).Any())
     {
-        <table class="table table-hover table-bordered table-striped">
+        <table class="table table-hover table-bordered">
             <thead>
                 <tr>
                     <th class="text-center">There is no tasks for @User.Identity?.Name</th>
@@ -24,7 +24,7 @@
         </table>
     }
     else {
-    <table class="table table-hover table-bordered table-striped">
+    <table class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>Name</th>
@@ -33,10 +33,10 @@
                 <th>Description</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tasks">
             @foreach (var task in db.GetAllTasksFromUser(new UserModel(@User.Identity?.Name)))
             {
-                <tr>
+                <tr id="trow" class="table-active">
                     <td>@task.Name</td>
                     <td>@task.Path</td>
                     <td>@task.CronExp</td>
