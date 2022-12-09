@@ -49,3 +49,35 @@
     </table>
     }
 </div>
+
+<div class="btn-group align-self-end" role="group" aria-label="task-actions">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#TaskAdd">Добавить</button>
+    <button type="button" class="btn btn-primary" disabled>Удалить</button>
+    <button type="button" class="btn btn-primary" disabled>Посмотреть лог</button>
+</div>
+
+<div class="modal fade mb-3" id="TaskAdd" tabindex="-1" aria-hidden="true" aria-labeledby="TaskAddLabel">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header mb-3">
+                <h1 class="modal-title fs-5" id="TaskAddLabel">Добавить задачу</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" asp-controller="Task" asp-action="Add" class="align-self-center">
+                <input asp-for="Name" class="form-control mb-3" placeholder="Имя задачи" />
+                <span asp-validation-for="Name"></span>
+
+                <input asp-for="Path" class="form-control mb-3" placeholder="example.com" />
+                <span asp-validation-for="Path"></span>
+
+                <input asp-for="CronExp" class="form-control mb-3" placeholder="Выражение Cron" />
+                <span asp-validation-for="CronExp"></span>
+
+                <input asp-for="Description" class="form-control mb-3" placeholder="Описание" />
+                <span asp-validation-for="Description"></span>
+
+                <input type="submit" class="mb-3 btn-primary" value="Accept" />
+            </form>
+        </div>
+    </div>
+</div>

@@ -29,12 +29,12 @@ namespace AvMonitor.Controllers
                     db.AddTask(task);
                     string result = (await HttpManager.GetInstance().PostAsync("Task/add", task)).ToString();
                     Console.WriteLine(result);
-                    return Redirect("/TaskEdit");
+                    return Redirect("/Home/TaskEdit");
                 }
                 
             }
             Console.WriteLine("ERROR");
-            return Redirect("/TaskEdit");
+            return Redirect("/Home/TaskEdit");
 
         }
 
@@ -44,7 +44,7 @@ namespace AvMonitor.Controllers
             task.UserName = User.Identity?.Name;
             db.DeleteTaskByID(task.Id);
             Console.WriteLine(await HttpManager.GetInstance().DeleteAsync($"Task/delete/{task.Id}"));
-            return Redirect("/TaskEdit");
+            return Redirect("/Home/TaskEdit");
         }
 
     }
