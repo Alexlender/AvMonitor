@@ -1,10 +1,13 @@
 ﻿using AvMonitor.Models;
 using System;
 using System.Net;
+
+
 namespace Agent.Classes
 {
     public static class Pinger
     {
+
         static HttpClient httpClient = new HttpClient();
         static public ResponseModel Ping(Uri uri, string taskId = "default")
         {
