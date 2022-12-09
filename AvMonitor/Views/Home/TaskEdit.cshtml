@@ -36,7 +36,7 @@
         <tbody id="tasks">
             @foreach (var task in db.GetAllTasksFromUser(new UserModel(@User.Identity?.Name)))
             {
-                <tr id="trow" class="table-active">
+                <tr id="trow" class="table-active"
                     <td>@task.Name</td>
                     <td>@task.Path</td>
                     <td>@task.CronExp</td>
