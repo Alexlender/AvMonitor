@@ -9,7 +9,7 @@ namespace AvMonitor.Models
 
     public class TaskModel
     {
-        [Display(Name = "Имя ресурса")]
+        [Display(Name = "Имя задачи")]
         [Required]
         public string? Name { get; set; } 
         public string? UserName { get; set; }
@@ -19,11 +19,11 @@ namespace AvMonitor.Models
 
         public string Id { get { return $"{UserName}.{Name}"; } } //всегда ункикальное (у каждого пользователя имена всех задач уникальны)
 
-        [Display(Name = "Url")]
+        [Display(Name = "Ссылка на задачу")]
         [Required]
         public string? Path { get; set; }
 
-        [Display(Name = "Периодичность выполнения (выражение crontab)")]
+        [Display(Name = "Расписание в формате CRON")]
         [Required]
         public string? CronExp { get; set; }
 

@@ -1,0 +1,91 @@
+﻿@using AvMonitor.Classes
+@using AvMonitor.Data
+@using Microsoft.EntityFrameworkCore
+@{
+
+    var db = new DataBase(ViewData["dbContext"] as TaskDataContext);
+
+}
+
+@model TaskModel
+@{
+    ViewData["Title"] = "Tasks";
+    //TODO: Привести в порядок формы
+}
+
+<div class="container-md">
+    <h1>Все задачи пользователя @User.Identity?.Name</h1>
+    @if (!db.GetAllTasksFromUser(new UserModel(@User.Identity?.Name)).Any())
+    {
+        <h5 class="text-center">There is no tasks for @User.Identity?.Name.</h5>
+    }
+    else {
+    <table class="table table-hover table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>URL</th>
+                <th>CronExp</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var task in db.GetAllTasksFromUser(new UserModel(@User.Identity?.Name)))
+            {
+                <tr>
+                    <td>@task.Name</td>
+                    <td>@task.Path</td>
+                    <td>@task.CronExp</td>
+                    <td>@task.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    }
+</div>
+
+
+<div>
+    <div class="row">
+        <div class="col">
+                <h1 class="text-lg-center">Добавить задачу</h1>
+                <form method="post" asp-controller="Task" asp-action="Add">
+
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="input-group" />
+                    <span asp-validation-for="Name"></span>
+
+                     <br>
+                     <label asp-for="Path"></label>
+                     <span asp-validation-for="Path"></span>
+                     <input asp-for="Path" class="input-group" />
+
+                     <br>
+
+                    <label asp-for="CronExp"></label>
+                    <input asp-for="CronExp" class="input-group" />
+                    <span asp-validation-for="CronExp"></span>
+
+                    <br>
+
+                    <label asp-for="Description"></label>
+                    <input asp-for="Description" class="input-group" />
+                    <span asp-validation-for="Description"></span>
+
+                    <br>
+
+                    <input type="submit" value="Добавить" />
+                </form>
+         </div>
+         <div class="col">
+            <h2 class="container">Удалить задачу</h2>
+            <form method="post" asp-controller="Task" asp-action="Delete">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" />
+                <span asp-validation-for="Name"></span>
+
+                <input type="submit" value="Удалить" />
+            </form>
+        </div>
+    </div>
+</div>

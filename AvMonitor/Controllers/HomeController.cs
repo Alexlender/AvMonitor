@@ -25,7 +25,7 @@ namespace AvMonitor.Controllers
             return View();
         }
 
-        public IActionResult Tasks()
+        public IActionResult TaskEdit()
         {
             ViewData["dbContext"] = _context;
             return View();
