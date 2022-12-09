@@ -19,6 +19,7 @@ namespace AvMonitor.Classes
         {
             _taskDataContext.Responses.Add(response);
             _taskDataContext.SaveChanges();
+            Console.WriteLine(_taskDataContext.Responses.AsEnumerable().Count());
         }
 
         public void AddTask(TaskModel task)

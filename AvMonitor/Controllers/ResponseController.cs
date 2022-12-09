@@ -19,7 +19,6 @@ namespace AvMonitor.Controllers
         [HttpPost("add-response")]
         public IActionResult Post([FromBody] ResponseModel response)
         {
-            
             db.AddResponse(response);
             return Ok();
         }
