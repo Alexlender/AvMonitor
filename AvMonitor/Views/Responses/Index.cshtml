@@ -1,0 +1,32 @@
+﻿@using AvMonitor.Classes
+@using AvMonitor.Data
+@using Microsoft.EntityFrameworkCore
+@{
+
+    var db = new DataBase(ViewData["dbContext"] as TaskDataContext);
+    TaskModel task = ViewData["task"] as TaskModel;
+}
+@{
+}
+
+ <table class="table table-hover table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>TaskId</th>
+                <th>DateTime</th>
+                <th>StatusCode</th>
+                <th>IsSuccess</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var response in db.GetAllResponsesByTask(task))
+            {
+                <tr>
+                    <td>@response.TaskId</td>
+                    <td>@response.DateTime</td>
+                    <td>@response.StatusCode</td>
+                    <td>@response.IsSuccess</td>
+                </tr>
+            }
+        </tbody>
+    </table>

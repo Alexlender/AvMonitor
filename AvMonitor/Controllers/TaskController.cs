@@ -38,6 +38,7 @@ namespace AvMonitor.Controllers
 
         }
 
+
         [HttpPost]
         public async Task<IActionResult> Delete(TaskModel task)
         {
