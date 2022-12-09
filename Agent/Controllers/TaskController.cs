@@ -52,6 +52,7 @@ namespace Agent.Controllers
 
         static public void Act(TaskModel task)
         {
+
             ResponseModel response = Pinger.Ping(task);
             HttpManager.GetInstance().PostAsync($"add-response", response).Wait();
         }
