@@ -33,10 +33,9 @@
                 <th>URL</th>
                 <th>CronExp</th>
                 <th>Description</th>
-                <th>Select</th>
+                <th></th>
             </tr>
         </thead>
-        <form method="post">
         <tbody>
             @foreach (var task in db.GetAllTasksFromUser(new UserModel(@User.Identity?.Name)))
             {
@@ -46,13 +45,12 @@
                     <td>@task.Path</td>
                     <td>@task.CronExp</td>
                     <td>@task.Description</td>
-                    <td><input type="checkbox" class="js-jobs-list-select-all" checked="@(1 == 0)" /></td>
+                    <td><button type="button"  class="btn btn-close"  value="Delete"/></td>
 
                 </tr>
                 
             }
         </tbody>
-            </form>
     </table>
     <h1>Говна поел жестко</h1>
     }
