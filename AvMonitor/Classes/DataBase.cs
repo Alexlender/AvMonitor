@@ -63,7 +63,7 @@ namespace AvMonitor.Classes
 
         public List<ResponseModel> GetResponsesByTask(TaskModel task, int n)
         {
-            return _taskDataContext.Responses.AsEnumerable().Where(response => response.TaskId == task.Id).Take(n).ToList();
+            return _taskDataContext.Responses.AsEnumerable().Where(response => response.TaskId == task.Id).Reverse().Take(n).ToList();
         }
 
         public TaskModel? GetTaskByID(string Id)
