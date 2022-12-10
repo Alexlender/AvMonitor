@@ -39,10 +39,15 @@
             @foreach (var task in db.GetAllTasksFromUser(new UserModel(@User.Identity?.Name)))
             {
                 <tr id="@task.Id">
-                    <td>@task.Name</td>
-                    <td>@task.Path</td>
-                    <td>@task.CronExp</td>
-                    <td>@task.Description</td>
+                    <form method="post" asp-controller="Task" asp-action="Delete">
+
+                    <td><input asp-for="Name" value="@task.Name" readonly/></td>
+                    <td><input asp-for="Path" value="@task.Path" readonly/></td>
+                    <td><input asp-for="CronExp" value="@task.CronExp" readonly/></td>
+                    <td><input asp-for="Description" value="@task.Description" readonly/></td>
+                    <td><input type="submit" value="Delete"></td>
+                    </form>
+                   
                 </tr>
                 
             }

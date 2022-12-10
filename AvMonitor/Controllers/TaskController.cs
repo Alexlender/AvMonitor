@@ -42,7 +42,8 @@ namespace AvMonitor.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Delete([FromBody]TaskModel task)
+        [Route("/Task/Delete")]
+        public async Task<IActionResult> Delete(TaskModel task)
         {
             task.UserName = User.Identity?.Name;
             db.DeleteTaskByID(task.Id);
