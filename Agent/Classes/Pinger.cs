@@ -21,7 +21,7 @@ namespace Agent.Classes
                 ResponseModel RM = new ResponseModel(response.StatusCode, taskId);
                 return RM;
             }
-            catch (HttpRequestException) 
+            catch (Exception) 
             {
                 ResponseModel RME = new ResponseModel(HttpStatusCode.NotFound, taskId);
                 return RME;
