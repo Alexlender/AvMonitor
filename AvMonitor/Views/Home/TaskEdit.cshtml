@@ -54,7 +54,6 @@
         </tbody>
         </form>
     </table>
-    <h1>Говна поел жестко</h1>
     }
 </div>
 
@@ -103,15 +102,20 @@
         <tbody>
             @foreach (var task in db.GetAllTasksFromUser(new UserModel(User.Identity?.Name)))
             {
-                @foreach(var resp in db.GetResponsesByTask(task, 5))
+                @foreach(var resp in db.GetResponsesByTask(task, 10))
                 {
-                    <tr>@task.Id</tr>
-                    <tr>@task.Name</tr>
-                    <tr>@task.Path</tr>
-                    <tr>@resp.IsSuccess</tr>
-                    <tr>@resp.StatusCode</tr>
-                    <tr>@resp.DateTime</tr>
+                    <tr>
+                        <td>@task.Id</td>
+                        <td>@task.Name</td>
+                        <td>@task.Path</td>
+                        <td>@resp.IsSuccess</td>
+                        <td>@resp.StatusCode</td>
+                        <td>@resp.DateTime</td>
+                    </tr>
                 }
+                <tr>
+                    <td>----</td>
+                </tr>
             }
         </tbody>
     </table>
