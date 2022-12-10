@@ -33,20 +33,16 @@
                 <th>URL</th>
                 <th>CronExp</th>
                 <th>Description</th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var task in db.GetAllTasksFromUser(new UserModel(@User.Identity?.Name)))
             {
                 <tr id="@task.Id">
-
                     <td>@task.Name</td>
                     <td>@task.Path</td>
                     <td>@task.CronExp</td>
                     <td>@task.Description</td>
-                    <td><input type="checkbox" class="js-jobs-list-select-all" /></td>
-
                 </tr>
                 
             }
@@ -55,9 +51,9 @@
     }
 </div>
 
-<div class="btn-group align-self-end" role="group" aria-label="task-actions">
+<div class="align-self-end" role="group" aria-label="task-actions">
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#TaskAdd">Добавить</button>
-    <button type="button" class="btn btn-primary" disabled>Удалить</button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#TaskDelete">Удалить</button>
     <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#log" aria-expanded="false" aria-controls="log">Посмотреть лог</button>
 </div>
 
@@ -87,6 +83,23 @@
     </div>
 </div>
 
+<div class="modal fade mb-3" id="TaskDelete" tabindex="-1" aria-hidden="true" aria-labeledby="TaskDeleteLabel">
+    <div class ="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header mb-3">
+                <h1 class="modal-title fs-5" id="TaskAddLabel">Удалить задачу</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" asp-controller="Task" asp-action="Delete" class="align-self-center">
+                <input asp-for="Name" class="form-control mb-3" placeholder="Имя задачи"/>
+                <span asp-validation-for="Name"></span>
+
+                <input type="submit" class="mb-3 btn-primary" value="Удалить" />
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="collapse" id="log">
     <table class="table">
         <thead>
@@ -100,6 +113,14 @@
         <tbody>
             @foreach (var task in db.GetAllTasksFromUser(new UserModel(User.Identity?.Name)))
             {
+                <tr>
+                    <td>---</td>
+                    <td>---</td>
+                    <td>---</td>
+                    <td>---</td>
+                    <td>---</td>
+                    <td>---</td>
+                </tr>
                 @foreach(var resp in db.GetResponsesByTask(task, 10))
                 {
                     <tr>
@@ -111,9 +132,6 @@
                         <td>@resp.DateTime</td>
                     </tr>
                 }
-                <tr>
-                    <td>----</td>
-                </tr>
             }
         </tbody>
     </table>
