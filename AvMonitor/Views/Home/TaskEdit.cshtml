@@ -45,12 +45,13 @@
                     <td>@task.Path</td>
                     <td>@task.CronExp</td>
                     <td>@task.Description</td>
-                    <td><button type="button"  class="btn btn-close"  value="Delete"/></td>
+                    <td><input type="checkbox" class="js-jobs-list-select-all" /></td>
 
                 </tr>
                 
             }
         </tbody>
+        </form>
     </table>
     <h1>Говна поел жестко</h1>
     }
@@ -59,7 +60,7 @@
 <div class="btn-group align-self-end" role="group" aria-label="task-actions">
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#TaskAdd">Добавить</button>
     <button type="button" class="btn btn-primary" disabled>Удалить</button>
-    <button type="button" class="btn btn-primary" disabled>Посмотреть лог</button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#log" aria-expanded="false" aria-controls="log">Посмотреть лог</button>
 </div>
 
 <div class="modal fade mb-3" id="TaskAdd" tabindex="-1" aria-hidden="true" aria-labeledby="TaskAddLabel">
@@ -86,4 +87,31 @@
             </form>
         </div>
     </div>
+</div>
+
+<div class="collapse" id="log">
+    <table class="table">
+        <thead>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>URL</th>
+            <th>STATUS</th>
+            <th>CODE</th>
+            <th>DATE</th>
+        </thead>
+        <tbody>
+            @foreach (var task in db.GetAllTasksFromUser(new UserModel(User.Identity?.Name)))
+            {
+                @foreach(var resp in db.GetResponsesByTask(task, 5))
+                {
+                    <tr>@task.Id</tr>
+                    <tr>@task.Name</tr>
+                    <tr>@task.Path</tr>
+                    <tr>@resp.IsSuccess</tr>
+                    <tr>@resp.StatusCode</tr>
+                    <tr>@resp.DateTime</tr>
+                }
+            }
+        </tbody>
+    </table>
 </div>
