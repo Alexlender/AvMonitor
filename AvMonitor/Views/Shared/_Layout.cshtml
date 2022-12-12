@@ -1,6 +1,15 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using AvMonitor.Classes
+@using AvMonitor.Models
+@using AvMonitor.Data
+
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+
+@{
+    var db = new DataBase(ViewData["dbContext"] as TaskDataContext);
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,9 +36,12 @@
                             <li class="nav-item nav-link">
                                 <a class="nav-link text-dark list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="TaskEdit">Tasks</a>
                             </li>
-                            <li class="nav-item nav-link">
-                                <a class="nav-link text-dark list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="Log">Log</a>
-                            </li>
+                            @if (db.GetAllTasksFromUser(new UserModel(@User.Identity?.Name)).Any())
+                            {
+                                <li class="nav-item nav-link">
+                                    <a class="nav-link text-dark list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="Log">Log</a>
+                                </li>
+                            }
                         }
                         <li class="nav-item nav-link">
                             <a class="nav-link text-dark list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

@@ -1,15 +1,33 @@
-﻿@model TaskModel
+﻿@using AvMonitor.Classes
+@using AvMonitor.Data
+@using AvMonitor.Models
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@model TaskModel
 @{
     ViewData["Title"] = "Home Page";
+    var db = new DataBase(ViewData["dbContext"] as TaskDataContext);
 }
 
-<div class="text-center">
-    <h1 class="display-4">AV Monitor</h1>
-    <h2>(≧◡≦)</h2>
-    <body>
-        <img src="https://mobimg.b-cdn.net/v3/fetch/2c/2c38ec7c72e3d0094f591d6f735a3b8e.jpeg"
-             width="400"
-             height="341"></img>
-    </body>
+<div class="container text-center">
+    <div class="row align-items-center">
+        <div class="col">
+            <h1 class="display-4">AV Monitor</h1>
+            <h2>(≧◡≦)</h2>
+            <body>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <a class="btn btn-primary" href="/Home/TaskEdit">Go to Tasks</a>
+                    @if (db.GetAllTasksFromUser(new UserModel(@User.Identity?.Name)).Any())
+                    {
+                        <a class="btn btn-primary" href="/Home/Log">Check your services status</a>
+                    }
+                }
+            </body>
+        </div>
+    </div>
 </div>
-<stryle

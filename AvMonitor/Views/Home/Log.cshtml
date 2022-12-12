@@ -1,5 +1,6 @@
 ﻿@using AvMonitor.Classes
 @using AvMonitor.Data
+@using AvMonitor.Models
 @using Microsoft.EntityFrameworkCore
 @{
     var db = new DataBase(ViewData["dbContext"] as TaskDataContext);
@@ -8,40 +9,53 @@
     @{
         int pos = 0;
     }
-    @foreach (var task in db.GetAllTasksFromUser(new UserModel(User.Identity?.Name)))
-    {
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="header_@pos">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#tab_@pos" aria-expended="true" aria-controls="tab_@pos">@task.Name</button>
-            </h2>
-        </div>
-        <div id="tab_@pos" class="accordion-collapse collapse" aria-labelledby="header_@pos" data-bs-parrent="logs">
-            <div class="accordion-body">
-                <table class="table table-hover table-bordered table-striped collapse accordion-collapse" id="tab_@pos">
-                    <br class="mb-3" />
-                    <thead>
-                        <tr>
-                            <th>TaskId</th>
-                            <th>DateTime</th>
-                            <th>StatusCode</th>
-                            <th>IsSuccess</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach (var response in db.GetResponsesByTask(task, 10))
-                        {
-                            <tr>
-                                <td>@response.TaskId</td>
-                                <td>@response.DateTime</td>
-                                <td>@response.StatusCode</td>
-                                <td>@response.IsSuccess</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+        @foreach (var task in db.GetAllTasksFromUser(new UserModel(User.Identity?.Name)))
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="header_@pos">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#tab_@pos" aria-expended="true" aria-controls="tab_@pos">@task.Name</button>
+                </h2>
             </div>
-        </div>
-        pos++;
-        }
+            <div id="tab_@pos" class="accordion-collapse collapse" aria-labelledby="header_@pos" data-bs-parrent="logs">
+                <div class="accordion-body">
+                @if (!db.GetResponsesByTask(task, 10).Any())
+                {
+                    <table class="table table-hover table-bordered table-striped collapse accordion-collapse" id="tab_@pos">
+                        <br class="mb-3" />
+                        <thead>
+                            <tr>
+                                <th class="text-center">There is no responses. Trigger the service or wait some time</th>
+                            </tr>
+                        </thead>
+                    </table>
+                }
+                else {
+                <table class="table table-hover table-bordered table-striped collapse accordion-collapse" id="tab_@pos">
+                        <br class="mb-3" />
+                        <thead>
+                            <tr>
+                                <th>TaskId</th>
+                                <th>DateTime</th>
+                                <th>StatusCode</th>
+                                <th>IsSuccess</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var response in db.GetResponsesByTask(task, 10))
+                            {
+                                <tr>
+                                    <td>@response.TaskId</td>
+                                    <td>@response.DateTime</td>
+                                    <td>@response.StatusCode</td>
+                                    <td>@response.IsSuccess</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    }
+                </div>
+            </div>
+            pos++;
+         }
 </div>
