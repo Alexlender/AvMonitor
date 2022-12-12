@@ -32,6 +32,12 @@ namespace AvMonitor.Controllers
             return View();
         }
 
+        public IActionResult Log()
+        {
+            ViewData["dbContext"] = _context;
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

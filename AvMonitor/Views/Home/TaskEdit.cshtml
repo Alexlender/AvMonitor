@@ -1,13 +1,11 @@
 ﻿@using AvMonitor.Classes
 @using AvMonitor.Data
 @using Microsoft.EntityFrameworkCore
-@{
-    var db = new DataBase(ViewData["dbContext"] as TaskDataContext);
-}
 
 @model TaskModel
 @{
     ViewData["Title"] = "Tasks";
+    var db = new DataBase(ViewData["dbContext"] as TaskDataContext);
     //TODO: Привести в порядок формы
 }
 
@@ -29,20 +27,32 @@
     <table class="table table-bordered table-striped">
             <thead class="table-info">
             <tr>
+                <th>Trigger</th>
                 <th>Name</th>
                 <th>URL</th>
                 <th>CronExp</th>
                 <th>Description</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var task in db.GetAllTasksFromUser(new UserModel(@User.Identity?.Name)))
             {
-                <tr id="@task.Id">
+                <tr>
+                    <form method="post" asp-controller="Task" asp-action="Check">
+                    <input asp-for="Name" value="@task.Name" hidden readonly />
+                    <td><input type="submit" class="btn btn-primary" value="Trigger"></td>
+                    </form>
+
                     <td>@task.Name</td>
                     <td>@task.Path</td>
                     <td>@task.CronExp</td>
                     <td>@task.Description</td>
+
+                    <form method="post" asp-controller="Task" asp-action="Delete">
+                    <input asp-for="Name" value="@task.Name" hidden readonly/>
+                    <td><input type="submit" class="btn btn-danger" value="Delete"></td>
+                    </form>
                 </tr>
                 
             }
@@ -53,7 +63,7 @@
 
 <div class="align-self-end" role="group" aria-label="task-actions">
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#TaskAdd">Добавить</button>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#TaskDelete">Удалить</button>
+    <!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#TaskDelete">Удалить</button>-->
     <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#log" aria-expanded="false" aria-controls="log">Посмотреть лог</button>
 </div>
 
@@ -98,41 +108,4 @@
             </form>
         </div>
     </div>
-</div>
-
-<div class="collapse " id="log">
-    <table class="table table-hover table-bordered">
-        <thead class="table-info">
-            <th>ID</th>
-            <th>NAME</th>
-            <th>URL</th>
-            <th>STATUS</th>
-            <th>CODE</th>
-            <th>DATE</th>
-        </thead>
-        <tbody>
-            @foreach (var task in db.GetAllTasksFromUser(new UserModel(User.Identity?.Name)))
-            {
-                <tr>
-                    <td>---</td>
-                    <td>---</td>
-                    <td>---</td>
-                    <td>---</td>
-                    <td>---</td>
-                    <td>---</td>
-                </tr>
-                @foreach(var resp in db.GetResponsesByTask(task, 10))
-                {
-                    <tr>
-                        <td>@task.Id</td>
-                        <td>@task.Name</td>
-                        <td>@task.Path</td>
-                        <td>@resp.IsSuccess</td>
-                        <td>@resp.StatusCode</td>
-                        <td>@resp.DateTime</td>
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
 </div>
