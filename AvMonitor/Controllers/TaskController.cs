@@ -44,19 +44,15 @@ namespace AvMonitor.Controllers
         public async Task<IActionResult> Check(TaskModel task)
         {
             task.UserName = User.Identity?.Name;
-            if (ModelState.IsValid)
+
+            task = db.GetTaskByID(task.Id);
+            if (task != null)
             {
-                if (db.GetTaskByID(task.Id) == null)
-                {
-                    string result = (await HttpManager.GetInstance().PostAsync("Task/check", task)).ToString();
-                    Console.WriteLine(result);
-                    return Redirect("/Home/TaskEdit");
-                }
-
+                Console.WriteLine($"TASKPATH {task.Path}");
+                string result = (await HttpManager.GetInstance().PostAsync("Task/check", task)).ToString();
+                Console.WriteLine(result);
             }
-            Console.WriteLine("ERROR");
             return Redirect("/Home/TaskEdit");
-
         }
 
         [HttpPost]
