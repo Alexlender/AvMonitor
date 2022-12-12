@@ -40,6 +40,25 @@ namespace AvMonitor.Controllers
 
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Check(TaskModel task)
+        {
+            task.UserName = User.Identity?.Name;
+            if (ModelState.IsValid)
+            {
+                if (db.GetTaskByID(task.Id) == null)
+                {
+                    db.AddTask(task);
+                    string result = (await HttpManager.GetInstance().PostAsync("Task/check", task)).ToString();
+                    Console.WriteLine(result);
+                    return Redirect("/Home/TaskEdit");
+                }
+
+            }
+            Console.WriteLine("ERROR");
+            return Redirect("/Home/TaskEdit");
+
+        }
 
         [HttpPost]
         public async Task<IActionResult> Delete(TaskModel task)

@@ -23,9 +23,10 @@ namespace Agent.Controllers
 
         [HttpPost]
         [Route("check")]
-        public ResponseModel CheckTask(TaskModel task)
-        { 
-            return Pinger.Ping(task.Path);
+        public IActionResult CheckTask(TaskModel task)
+        {
+            Act(task);
+            return Ok();
         }
 
 
