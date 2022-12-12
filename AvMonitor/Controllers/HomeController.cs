@@ -23,6 +23,7 @@ namespace AvMonitor.Controllers
 
         public IActionResult Privacy()
         {
+            ViewData["dbContext"] = _context;
             return View();
         }
 

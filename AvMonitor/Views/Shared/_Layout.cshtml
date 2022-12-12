@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
 @using AvMonitor.Classes
 @using AvMonitor.Models
 @using AvMonitor.Data
@@ -36,7 +37,7 @@
                             <li class="nav-item nav-link">
                                 <a class="nav-link text-dark list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="TaskEdit">Tasks</a>
                             </li>
-                            @if (db.GetAllTasksFromUser(new UserModel(@User.Identity?.Name)).Any())
+                            if (db.GetAllTasksFromUser(new UserModel(User.Identity?.Name)).Any())
                             {
                                 <li class="nav-item nav-link">
                                     <a class="nav-link text-dark list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="Log">Log</a>
@@ -44,7 +45,7 @@
                             }
                         }
                         <li class="nav-item nav-link">
-                            <a class="nav-link text-dark list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                           <a class="nav-link text-dark list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
