@@ -48,7 +48,6 @@ namespace AvMonitor.Controllers
             {
                 if (db.GetTaskByID(task.Id) == null)
                 {
-                    db.AddTask(task);
                     string result = (await HttpManager.GetInstance().PostAsync("Task/check", task)).ToString();
                     Console.WriteLine(result);
                     return Redirect("/Home/TaskEdit");
