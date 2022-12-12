@@ -35,6 +35,9 @@ namespace AvMonitor.Classes
         {
             if (task != null)
             {
+
+                foreach (var response in GetAllResponsesByTask(task))
+                    _taskDataContext.Responses.Remove(response);
                 _taskDataContext.Tasks.Remove(task);
                 _taskDataContext.SaveChanges();
             }
@@ -42,13 +45,7 @@ namespace AvMonitor.Classes
 
         public void DeleteTaskByID(string Id)
         {
-            TaskModel itemToRemove = GetTaskByID(Id);
-
-            if (itemToRemove != null)
-            {
-                _taskDataContext.Tasks.Remove(itemToRemove);
-                _taskDataContext.SaveChanges();
-            }
+            DeleteTask(GetTaskByID(Id));
         }
 
         public List<ResponseModel> GetAllResponsesByTask(TaskModel task)
