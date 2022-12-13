@@ -9,7 +9,7 @@ namespace Agent.Classes
     {
 
         static HttpClient httpClient = new HttpClient();
-        static public ResponseModel Ping(Uri uri, string taskId = "default"б)
+        static public ResponseModel Ping(Uri uri, string taskId = "default")
         {
             try
             {
