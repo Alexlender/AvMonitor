@@ -34,7 +34,8 @@
                         <br class="mb-3" />
                         <thead>
                             <tr>
-                                <th>TaskId</th>
+                                <th>Task Name</th>
+                                <th>URI</th>
                                 <th>DateTime</th>
                                 <th>StatusCode</th>
                                 <th>IsSuccess</th>
@@ -45,7 +46,8 @@
                             @foreach (var response in db.GetResponsesByTask(task, 10))
                             {
                                 <tr>
-                                    <td>@response.TaskId</td>
+                                    <td>@task.Name</td>
+                                    <td>@task.Path</td>
                                     <td>@response.DateTime</td>
                                     <td>@response.StatusCode</td>
                                     <td>@response.IsSuccess</td>
