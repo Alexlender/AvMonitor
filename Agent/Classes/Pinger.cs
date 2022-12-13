@@ -9,7 +9,7 @@ namespace Agent.Classes
     {
 
         static HttpClient httpClient = new HttpClient();
-        static public ResponseModel Ping(Uri uri, string taskId = "default")
+        static public ResponseModel Ping(Uri uri, string taskId = "default"б)
         {
             try
             {
@@ -21,7 +21,7 @@ namespace Agent.Classes
                 ResponseModel RM = new ResponseModel(response.StatusCode, taskId);
                 return RM;
             }
-            catch (HttpRequestException) 
+            catch (Exception) 
             {
                 ResponseModel RME = new ResponseModel(HttpStatusCode.NotFound, taskId);
                 return RME;
